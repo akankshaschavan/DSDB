@@ -1,0 +1,41 @@
+import pandas as pd
+import seaborn as sns
+import numpy as np 
+import matplotlib.pyplot as plt
+
+
+df = sns.load_dataset('titanic')
+df
+
+
+df.dropna()
+
+df.info()
+
+
+df.describe()
+
+
+df.isnull().sum()
+
+
+sns.boxplot(x = 'sex', y = 'age', data= df , hue = "survived")
+
+
+sns.boxplot(x = 'sex', y = 'age', data= df )
+
+
+sns.swarmplot(x='sex', y='age', data=df,hue="survived")
+
+
+sns.swarmplot(x='sex', y='age', data=df)
+
+
+sns.violinplot(x = 'sex' , y = 'age', data=df,hue="survived")
+
+
+sns.violinplot(x = 'sex' , y = 'age', data=df)
+
+
+
+

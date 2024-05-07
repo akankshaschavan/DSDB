@@ -1,0 +1,49 @@
+import pandas as pd
+import numpy as np
+
+df=pd.read_csv("data1.csv")
+
+df
+
+df.describe()
+
+
+df["age"].max()
+
+df["age"].std()
+
+df["age"].median()
+
+df["income"].nunique()
+
+
+
+df.groupby(["income","age"]).count()
+
+df.groupby(["income","age"]).min()
+
+df.groupby(["income","age"]).max()
+
+df.groupby(["income","age"]).mean()
+
+df.groupby(["income","age"]).median()
+
+df.groupby(["income","age"]).std()
+
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+
+df=sns.load_dataset('Iris')
+
+print('Origional Dataset')
+
+df.head()
+
+df.describe()
+
+np.percentile(df["sepal_length"],25)
+
+df["sepal_length"].std()
+

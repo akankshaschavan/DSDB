@@ -1,0 +1,105 @@
+import pandas as pd
+import seaborn as sns
+import numpy as np 
+import matplotlib.pyplot as plt
+
+df = sns.load_dataset('titanic')
+df
+
+
+df.shape
+
+df.isnull().sum()
+
+
+import warnings
+warnings.filterwarnings('ignore')
+#Distplot
+sns.distplot(x = df['survived'],bins = 10)
+
+
+sns.distplot(x = df['age'],bins = 20, color='red')
+
+
+
+#Joint Plot
+#it is combination od two variables
+sns.jointplot(x = df ['age'], y=df['fare'],kind='scatter',color='green')
+
+
+sns.jointplot(x = df ['age'], y = df['fare'],kind='hex')
+
+
+#Rug Plot
+# a plot data for a single quntitive variable,displyed as make along an axis
+sns.rugplot(df['age'])
+
+
+# Bar Plot
+# the bar plot display the mean value od each categorical columns 
+sns.barplot(x = "sex", y = "age", data=df, palette='RdBu_r')
+
+
+
+# Count Plot 
+# the count plot is similar to the bar plot 
+sns.countplot(x = "sex", data = df, palette='RdBu_r')
+
+
+# Box Plot
+# the box plot shows the median value.
+ sns.boxplot(x = 'sex', y = 'age', data= df)
+
+
+sns.boxplot(x = 'sex', y = 'age', data= df , hue = "survived")
+
+
+# violin plot
+# the violin plot allow us to display all the components that actually correspond to the data points.
+sns.violinplot(x = 'sex' , y = 'age', data=df)
+
+
+sns.violinplot(x = 'sex' , y = 'age', data=df ,hue = 'survived')
+
+
+sns.stripplot(x="sex", y = "age",data=df, jitter=False)
+
+
+sns.stripplot(x="sex", y = "age",data=df, jitter=True)
+
+
+sns.stripplot(x="sex", y = "age",data=df, jitter=True, hue= "survived")
+
+
+#b. The Swarm Plot
+sns.swarmplot(x='sex', y='age', data=df)
+
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+dataset = sns.load_dataset('titanic')
+dataset.head()
+
+
+group =df.groupby(['pclass', 'survived'])
+
+group.size().unstack()
+
+
+# Exclude non-numeric columns from correlation calculation
+numeric_columns = dataset.select_dtypes(include=[np.number])
+correlation_matrix = numeric_columns.corr()
+# Display the correlation matrix
+print(correlation_matrix)
+
+
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
+plt.show()
+
+
+sns.histplot(dataset['fare'], kde=False, bins=10)
+
+
+

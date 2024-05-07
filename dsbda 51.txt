@@ -1,0 +1,125 @@
+import pandas as pd
+import numpy as np
+
+
+from sklearn import linear_model
+from sklearn.model_selection import train_test_split
+from sklearn import metrics
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+
+df=pd.read_csv('Social_Network_Ads.csv')
+
+
+df
+
+
+df.describe()
+
+
+df.isnull().sum()
+
+
+df.shape
+
+
+df_x=df[['Age','EstimatedSalary']]
+df_y=df['Purchased']
+
+
+df_x
+
+
+df_y
+
+
+
+df_x.values
+
+
+df_y.values
+
+
+x_train, x_test, y_train, y_test = train_test_split(df_x, df_y, test_size= 0.33, random_state= 42)
+
+
+from sklearn. preprocessing import StandardScaler
+
+scaler=StandardScaler()
+
+scaler.fit(x_train)
+
+
+x_test=scaler.transform(x_test)
+
+
+from sklearn.linear_model import LogisticRegression
+
+
+logreg=LogisticRegression()
+
+
+logreg.fit(x_train,y_train)
+
+
+y_predict=logreg.predict(x_test)
+print(y_predict)
+
+
+print(logreg.coef_)
+
+
+var=logreg.predict([[35,20000]])
+
+
+print(var)
+
+
+from sklearn.metrics import plot_roc_curve, confusion_matrix, f1_score,precision_score,recall_score,accuracy_score
+cm = metrics.confusion_matrix(y_test,y_predict)
+cm
+tn, fp, fn, tp = cm.ravel()
+(tn, fp, fn, tp)
+
+
+cm_df = pd.DataFrame(cm, columns = ['Predicted Negative', 'Predicted Positive'],index = ['Actual Negative', 'Actual Positive'])
+
+
+cm_df
+
+
+p=metrics.precision_score(y_test, y_predict)
+r=metrics.recall_score(y_test, y_predict)
+a=metrics.accuracy_score(y_test, y_predict)
+f1=metrics.f1_score(y_test, y_predict)
+print("precision_score:",p)
+print("recall_score:",r)
+print("accuracy_score:",a)
+print("f1_score:",f1)
+metrics.roc_curve(y_predict,y_test)
+
+
+
+fpr,tpr,th=metrics.roc_curve(y_predict,y_test)
+
+
+import matplotlib.pyplot as plt
+
+
+roc_auc=metrics.auc(fpr,tpr)
+
+
+display=metrics.RocCurveDisplay(fpr=fpr,tpr=tpr,roc_auc=roc_auc)
+
+display.plot()
+
+
+
+
+
+
+
+
+
+

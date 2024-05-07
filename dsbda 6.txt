@@ -1,0 +1,66 @@
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
+from sklearn.metrics import confusion_matrix, accuracy_score, precision_score, recall_score
+
+
+df = pd.read_csv("iris.csv")
+df.head()
+
+df.info()
+
+df.describe()
+
+df.shape
+
+df.size
+
+df.isnull().sum()
+
+df = pd.read_csv("iris.csv")
+df.head()
+ # SepalLengthCmSepalWidthCm PetalLengthCm PetalWidthCm
+x=df.iloc[:,0:4].values
+y=df.iloc[:,4].values # Targeted variable -- Specie
+
+x
+
+y
+
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.3,random_state=0)
+
+sc = StandardScaler()
+X_train = sc.fit_transform(X_train)
+X_test = sc.transform(X_test)
+
+gaussian = GaussianNB()
+gaussian.fit(X_train, y_train)
+
+y_pred = gaussian.predict(x_test)
+
+print(Y_pred)
+
+accuracy_nb=round(accuracy_score(y_test,Y_pred)* 100, 2)
+accuracy_nb
+
+acc_gaussian = round(gaussian.score(X_train, y_train) * 100, 2)
+acc_gaussian
+
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix, f1_score, precision_score,recall_score, accuracy_score
+
+cm = confusion_matrix(y_test, Y_pred)
+accuracy = accuracy_score(y_test,Y_pred)
+precision =precision_score(y_test, Y_pred,average='micro')
+recall = recall_score(y_test, Y_pred,average='micro')
+f1 = f1_score(y_test,Y_pred,average='micro') 
+print('Confusion matrix for Naive Bayes\n',cm) 
+print('accuracy_Naive Bayes: %.3f' %accuracy) 
+print('precision_Naive Bayes: %.3f' %precision)
+print('recall_Naive Bayes: %.3f' %recall) 
+print('f1-score_Naive Bayes : %.3f' %f1)
+
+cm_df = pd.DataFrame(cm,columns = ['Predicted Setosa','Predicted Versicolor','Predicted Virginica'],index = ['Actual Setosa','Actual Veriscolor','Actual Virginica'])
+cm_df

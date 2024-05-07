@@ -1,0 +1,121 @@
+import warnings
+warnings.filterwarnings('ignore')
+import pandas as pd
+import seaborn as sns
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+df= pd.read_csv ("iris.csv")
+df
+
+
+df.drop_duplicates(['variety'])
+
+
+df.value_counts(['variety'])
+
+df.shape
+
+df.isnull().sum()
+
+
+df.info()
+
+df.describe()
+
+sns.scatterplot(x='sepal.length',y='sepal.width',hue='variety',data=df)
+
+
+sns.countplot(x='sepal.width', data=df)
+
+
+sns.countplot(x='sepal.length', data=df)
+
+
+sns.countplot(x='sepal.length', data=df)
+
+
+sns.countplot(x='petal.width', data=df)
+
+
+sns.pairplot(data=df, vars=['sepal.length', 'sepal.width'], hue='variety')
+
+
+sns.distplot(x = df['sepal.length'],bins = 10)
+
+
+
+# Create histograms
+for column in df.columns:
+    plt.figure(figsize=(4,2))
+    sns.histplot(df[column], kde=True)
+    plt.title(f'Histogram of {column}')
+    plt.show()
+
+
+
+# Create boxplots
+for column in df.columns:
+    plt.figure(figsize=(4,2))
+    sns.boxplot(df[column])
+    plt.title(f'Boxplot of {column}')
+    plt.show()
+
+
+data = sns.pairplot(df,hue="variety") 
+data
+
+
+
+for column in df.columns[:-1]:  # Exclude the target variable for this analysis
+    # Create a 1x2 grid for the plots
+    fig, axes = plt.subplots(1, 2, figsize=(7,4))
+    # Plot histogram
+    sns.histplot(df[column], kde=True, ax=axes[0], color='orange')
+    axes[0].set_title(f'Histogram of {column}')
+    # Plot boxplot
+    sns.boxplot(x=df[column], ax=axes[1], color='pink')
+    axes[1].set_title(f'Boxplot of {column}')
+    # Adjust layout
+    plt.tight_layout()
+    plt.show()
+
+
+numeric_columns = df.select_dtypes(include=[np.number])
+correlation_matrix = numeric_columns.corr()
+# Display the correlation matrix
+print(correlation_matrix)
+
+
+sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
+plt.show()
+
+
+
+Q1 = np.percentile(df['sepal.width'],25, 
+                 interpolation = 'midpoint')
+Q3 = np.percentile(df['sepal.width'],75,
+                 interpolation = 'midpoint')
+# formula
+IQR = Q3-Q1
+print("Old Shape:", df.shape)
+
+
+#Upper bound
+upper = np.where(df['sepal.width'] >= (Q3+1.5*IQR))
+#Lower bound
+Lower = np.where(df['sepal.width'] <= (Q3-1.5*IQR))
+
+
+#Removing the outliers
+df.drop(upper[0], inplace = True)
+df.drop(Lower[0], inplace = True)
+print('new shape:', df.shape)
+sns.boxplot(x='sepal.width', data=df)
+
+
+
+
+
+
